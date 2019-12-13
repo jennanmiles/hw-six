@@ -11,6 +11,13 @@ h1 {
     font-size: 2.5em;
 }
 
+h2 {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.75em;
+    margin: 10px 0 15px 0;
+    display: block;
+}
+
 .contentWrapper {
     display: flex;
     width: 100%;
@@ -21,7 +28,7 @@ h1 {
 .contentWrapper .searchArea {
     background-color: #ccc;
     width: 30%;
-    height: 500px;
+    height: auto;
 }
 
 label {
@@ -54,15 +61,38 @@ label {
 /* current city */
 .contentWrapper .currentCity {
     width: 70%;
-    height: 500px;
-    background-color: #555;
+    height: auto;
+    background-color: #6d95ad;
 }
 
 .todayForecast, .fivedForecast {
     display: block;
     width: 90%;
-    border: 1px solid #000;
     background-color: #fff;
-    height: 200px;
+    height: auto;
     margin: 1em auto;
+    padding: 1em;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #445f6f;
+}
+
+.textlabel {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+/* 5 day forecast */
+.forecastCardWrapper {
+    display: flex;
+}
+
+.forecastCard {
+    background-color: #9fcee4;
+    margin: 10px;
+    width: 20%;
+    height: 150px;
+    padding: 20px;
+    box-sizing: border-box;
 }
