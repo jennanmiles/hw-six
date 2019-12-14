@@ -47,8 +47,8 @@ $('#search').click(function() {
 
         for (let i = 0; i < newArray.length; i++) {
             let card = $('<div>').addClass('forecastCard');
-            let temp = $('<div>').addClass('temp').text(newArray[i].main.temp);
-            let humid = $('<div>').addClass('humidity').text(newArray[i].main.humidity);
+            let temp = $('<div>').addClass('temp').text('Temperature: ' + newArray[i].main.temp + '°F');
+            let humid = $('<div>').addClass('humidity').text('Humidity: ' + newArray[i].main.humidity + '%');
 
             card.append(temp,humid);
             $('.forecastCardWrapper').append(card);
