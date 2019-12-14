@@ -2,17 +2,15 @@
 
 $('#search').click(function() {
     let userCity = $('#searchField').val();
-    console.log(userCity);
 
     // sidebar inputs user text, queries api, and adds div to search sidebar
     $('.recentSearch').append('<div class="textlabel">' + userCity +'</div>');
 
-    // clear user input on click?
-
+    // clear user input on click --> make clickable 
+    $('.forecastCardWrapper').empty();
     // current city div displays temp, humidity, wind speed, and UV index
     let queryUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + userCity +'&APPID=0a2917cfe155f518d8a07dd10675329a&units=imperial';
-    // let lat = queryUrl.coord.lat
-    // let lon = queryUrl.coord.lon
+
     // console.log(lat);
     // console.log(lon);
 
@@ -30,10 +28,40 @@ $('#search').click(function() {
         // wind speed
         $('#cityWind').html('Wind Speed: ' + response.wind.speed + ' MPH');
         
+        getLatLon(response.coord.lat, response.coord.lon);
+
     });
 
+    // 5 day forecast displays the date, the temp, the humidity, and an icon
+    let queryUrl3 = 'http://api.openweathermap.org/data/2.5/forecast?appid=0a2917cfe155f518d8a07dd10675329a&q=' + userCity + '&units=imperial'
+
+    $.ajax({
+        url: queryUrl3,
+        method: 'GET',
+    }).then(function(response) {
+        let arraylen = response.list;
+        //console.log(arraylen);
+        // getting 5 day forecast
+        let newArray = arraylen.slice(0,5);
+        //console.log(newArray);
+
+        for (let i = 0; i < newArray.length; i++) {
+            let card = $('<div>').addClass('forecastCard');
+            let temp = $('<div>').addClass('temp').text(newArray[i].main.temp);
+            let humid = $('<div>').addClass('humidity').text(newArray[i].main.humidity);
+
+            card.append(temp,humid);
+            $('.forecastCardWrapper').append(card);
+        }
+
+    })
+
+// close click function
+})
+
+function getLatLon (lat,lon) {
     // uv index query, date query
-    let queryUrl2 = 'http://api.openweathermap.org/data/2.5/uvi?appid=0a2917cfe155f518d8a07dd10675329a&lat=32.22&lon=-110.93'
+    let queryUrl2 = 'http://api.openweathermap.org/data/2.5/uvi?appid=0a2917cfe155f518d8a07dd10675329a&lat=' + lat + '&lon=' + lon;
 
     $.ajax({
         url: queryUrl2,
@@ -45,27 +73,4 @@ $('#search').click(function() {
         // uv index
         $('#cityUV').html('UV Index: ' + response.value);
     })
-
-    // 5 day forecast displays the date, the temp, the humidity, and an icon
-    let queryUrl3 = 'http://api.openweathermap.org/data/2.5/forecast?appid=0a2917cfe155f518d8a07dd10675329a&q=' + userCity + '&units=imperial'
-
-    $.ajax({
-        url: queryUrl3,
-        method: 'GET',
-    }).then(function(response) {
-        let arraylen = response.list;
-        // getting 5 day forecast
-        let newArray = arraylen.slice(0,5);
-        //console.log(newArray);
-
-        for (let i = 0; i < newArray.length; i++) {
-            //let temp = newArray[i].main.temp;
-        console.log(newArray);
-            $('.forecastCardWrapper').append('<div class="forecastCard"></div>');
-            $('.forecastCard').append('<div class="temp"></div>').html(newArray[i].main.temp);
-            $('.forecastCard').append('<div class="humidity"></div>').html(newArray[i].main.humidity);
-        }
-    })
-
-// close click function
-})
+}
