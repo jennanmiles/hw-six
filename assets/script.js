@@ -9,7 +9,7 @@ $('#search').click(function() {
     // clear user input on click --> make clickable 
     $('.forecastCardWrapper').empty();
     // current city div displays temp, humidity, wind speed, and UV index
-    let queryUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + userCity +'&APPID=0a2917cfe155f518d8a07dd10675329a&units=imperial';
+    let queryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + userCity +'&APPID=0a2917cfe155f518d8a07dd10675329a&units=imperial';
 
     // console.log(lat);
     // console.log(lon);
@@ -33,7 +33,7 @@ $('#search').click(function() {
     });
 
     // 5 day forecast displays the date, the temp, the humidity, and an icon
-    let queryUrl3 = 'http://api.openweathermap.org/data/2.5/forecast?appid=0a2917cfe155f518d8a07dd10675329a&q=' + userCity + '&units=imperial'
+    let queryUrl3 = 'https://api.openweathermap.org/data/2.5/forecast?appid=0a2917cfe155f518d8a07dd10675329a&q=' + userCity + '&units=imperial'
 
     $.ajax({
         url: queryUrl3,
@@ -61,7 +61,7 @@ $('#search').click(function() {
 
 function getLatLon (lat,lon) {
     // uv index query, date query
-    let queryUrl2 = 'http://api.openweathermap.org/data/2.5/uvi?appid=0a2917cfe155f518d8a07dd10675329a&lat=' + lat + '&lon=' + lon;
+    let queryUrl2 = 'https://api.openweathermap.org/data/2.5/uvi?appid=0a2917cfe155f518d8a07dd10675329a&lat=' + lat + '&lon=' + lon;
 
     $.ajax({
         url: queryUrl2,
