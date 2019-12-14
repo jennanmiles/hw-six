@@ -11,17 +11,23 @@ h1 {
     font-size: 2.5em;
 }
 
-h2 {
+h2,h3 {
     font-family: 'Noto Serif', serif;
     font-size: 1.75em;
     margin: 10px 0 15px 0;
     display: block;
 }
 
+h3 {
+    font-size: 1.25em;
+    margin: 0 0 10px 0;
+}
+
 .contentWrapper {
     display: flex;
     width: 100%;
     position: relative;
+    flex-wrap: wrap;
 }
 
 /* search area styles */
@@ -29,6 +35,20 @@ h2 {
     background-color: #ccc;
     width: 30%;
     height: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+button {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #315971;
+    font-size: 1em;
+    border-radius: 5px;
+    padding: .5em 1.25em;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    color: white;
 }
 
 label {
@@ -86,6 +106,7 @@ label {
 /* 5 day forecast */
 .forecastCardWrapper {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .forecastCard {
@@ -95,4 +116,19 @@ label {
     height: 150px;
     padding: 20px;
     box-sizing: border-box;
+}
+
+@media only screen and (max-width: 728px) { 
+    .contentWrapper .searchArea {
+        width: 100%;
+        display: block;
+    }
+
+    .contentWrapper .currentCity {
+        width: 100%;
+    }
+
+    .forecastCard {
+        width: 100%;
+    }
 }
