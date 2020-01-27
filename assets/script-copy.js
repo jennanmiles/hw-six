@@ -1,59 +1,30 @@
-// variables
-
-// empty array
-let itemsArray = localStorage.getItem('input') ? JSON.parse(localStorage.getItem('input')) : [];
-// set array
-let setArray = localStorage.setItem('input', JSON.stringify(itemsArray));
-// parse array
-let data = JSON.parse(localStorage.getItem('input'));
-
-
-// onload function for refresh
-$(document).ready(function(){
-    loopArr();
-
-});
-
-function loopArr() {
-    // loop thru array 
-    for (let i = 0; i < itemsArray.length; i++) {
-        $('.recentSearch').append('<div class="textlabel">' + data[i] + '</div>');
-    }
-}
-
-
 // click function
 $('#search').click(function() {
     let userCity = $('#searchField').val();
 
-    // appends input to search sidebar
+    // sidebar inputs user text, queries api, and adds div to search sidebar
     $('.recentSearch').append('<div class="textlabel">' + userCity +'</div>');
 
-    // push to array
-    itemsArray.push(userCity);
-    // update local storage
-    localStorage.setItem('input', JSON.stringify(itemsArray));
+    // stores to local storage
+    let searches = localStorage.setItem('input', JSON.stringify(userCity));
+    $('.textlabel').text(searches);
+    
+    //let pastsearches = localStorage.getItem('input');
 
-    // clear prior forecast on click 
+    // clear user input on click --> make clickable 
     $('.forecastCardWrapper').empty();
-
-    // ajax calls
-    ajaxcalls(userCity);
-
-});
-
-
-function ajaxcalls (userCity) {
-
-    // current day displays temp, humidity, wind speed, and UV index
+    // current city div displays temp, humidity, wind speed, and UV index
     let queryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + userCity +'&APPID=0a2917cfe155f518d8a07dd10675329a&units=imperial';
 
-    // ajax call with promise    
+    // console.log(lat);
+    // console.log(lon);
+
+// ajax call with promise    
     $.ajax({
         url: queryUrl,
         method: 'GET',
     }).then(function(response) {
-        //console.log(response);
+        console.log(response);
         // city name
         $('#cityName').html(response.name);
         // temp
@@ -70,33 +41,30 @@ function ajaxcalls (userCity) {
     // 5 day forecast displays the date, the temp, the humidity, and an icon
     let queryUrl3 = 'https://api.openweathermap.org/data/2.5/forecast?appid=0a2917cfe155f518d8a07dd10675329a&q=' + userCity + '&units=imperial'
 
-    // another ajax call
+// another ajax call
     $.ajax({
         url: queryUrl3,
         method: 'GET',
     }).then(function(response) {
         let arraylen = response.list;
-        // need every 2nd entry for 5 day
-        let fiver = Math.floor(arraylen.length / 5);
+        //console.log(arraylen);
+        // getting 5 day forecast
+        let newArray = arraylen.slice(0,5);
+        //console.log(newArray);
 
-        for (let i = 0; i < arraylen.length; i += fiver) {
+        for (let i = 0; i < newArray.length; i++) {
             let card = $('<div>').addClass('forecastCard');
-            // date
-            let newdate = $('<div>').addClass('dateEntry').text('Date: ' + arraylen[i].dt_txt);
-            // temp
-            let temp = $('<div>').addClass('temp').text('Temperature: ' + arraylen[i].main.temp + '°F');
-            // icons
-            let icons = $('<div>').addClass('icon').html('<img src="http://openweathermap.org/img/wn/' + arraylen[i].weather[0].icon + '@2x.png">');
-            // humidity
-            let humid = $('<div>').addClass('humidity').text('Humidity: ' + arraylen[i].main.humidity + '%');
-            // append
-            card.append(newdate,temp,icons,humid);
+            let temp = $('<div>').addClass('temp').text('Temperature: ' + newArray[i].main.temp + '°F');
+            let humid = $('<div>').addClass('humidity').text('Humidity: ' + newArray[i].main.humidity + '%');
+
+            card.append(temp,humid);
             $('.forecastCardWrapper').append(card);
         }
 
     })
 
-}
+// close click function
+})
 
 function getLatLon (lat,lon) {
     // uv index query, date query
@@ -106,6 +74,7 @@ function getLatLon (lat,lon) {
         url: queryUrl2,
         method: 'GET',
     }).then(function(response) {
+        //console.log(response);
         // date
         $('#cityDate').html('Date: ' + response.date_iso);
         // uv index

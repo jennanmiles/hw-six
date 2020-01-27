@@ -112,8 +112,9 @@ label {
 .forecastCard {
     background-color: #9fcee4;
     margin: 10px;
-    width: 20%;
-    height: 150px;
+    width: 25%;
+    min-width: 180px;
+    height: auto;
     padding: 20px;
     box-sizing: border-box;
 }
