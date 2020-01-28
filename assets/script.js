@@ -11,7 +11,7 @@ let data = JSON.parse(localStorage.getItem('input'));
 // onload function for refresh
 $(document).ready(function(){
     loopArr();
-
+    ajaxcalls(itemsArray[itemsArray.length-1]);
 });
 
 function loopArr() {
@@ -33,6 +33,7 @@ $('#search').click(function() {
     itemsArray.push(userCity);
     // update local storage
     localStorage.setItem('input', JSON.stringify(itemsArray));
+    // get last item in array
 
     // clear prior forecast on click 
     $('.forecastCardWrapper').empty();
